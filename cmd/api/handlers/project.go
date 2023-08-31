@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"projects-rss/pkg"
+	"strconv"
 	"strings"
 	"time"
 
@@ -17,7 +18,12 @@ func GetProjects(w http.ResponseWriter, r *http.Request) {
 		tag = q
 	}
 
-	projects, err := pkg.GetProjects(1, tag)
+	page := 1
+	if n, err := strconv.Atoi(r.URL.Query().Get("page")); err == nil {
+		page = n
+	}
+
+	projects, err := pkg.GetProjects(uint(page), tag)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
