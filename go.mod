@@ -1,4 +1,4 @@
-module projects-rss
+module projects-feed
 
 go 1.20
 

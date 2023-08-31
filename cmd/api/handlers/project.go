@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"projects-rss/pkg"
+	"projects-feed/pkg/projects"
 	"strconv"
 	"strings"
 	"time"
@@ -25,7 +25,7 @@ func GetProjects(w http.ResponseWriter, r *http.Request) {
 		page = n
 	}
 
-	projects, err := pkg.GetProjects(uint(page), tag)
+	projects, err := projects.GetProjects(uint(page), tag)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
@@ -60,7 +60,7 @@ func GetProjectsFeed(w http.ResponseWriter, r *http.Request) {
 	if q := r.URL.Query().Get("tag"); q != "" {
 		tag = q
 	}
-	projects, err := pkg.GetProjects(1, tag)
+	projects, err := projects.GetProjects(1, tag)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))

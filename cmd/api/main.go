@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"projects-rss/cmd/api/handlers"
+	"projects-feed/cmd/api/handlers"
 
 	"github.com/go-chi/chi/v5"
 )
@@ -29,8 +29,9 @@ func main() {
 		port = "8080"
 	}
 
-	if os.Getenv("ENV") != "production" {
-		log.Println("Running in port:", port)
+	env := os.Getenv("ENV")
+	if env != "production" {
+		log.Printf("Running [%s] in port: %s", env, port)
 	}
 
 	err := http.ListenAndServe(fmt.Sprintf(":%s", port), c)
