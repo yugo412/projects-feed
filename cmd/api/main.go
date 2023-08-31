@@ -14,6 +14,7 @@ func main() {
 	c := chi.NewRouter()
 
 	c.Get("/projects", handlers.GetProjects)
+	c.Get("/projects/{type}", handlers.GetProjectsFeed)
 
 	err := http.ListenAndServe(":3000", c)
 	if err != nil {
