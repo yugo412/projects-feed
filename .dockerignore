@@ -1,0 +1,299 @@
+# flyctl launch added from .gitignore
+.idea
+vendor
+
+**/.env
+
+# flyctl launch added from vendor/github.com/PuerkitoBio/goquery/.gitignore
+# editor temporary files
+vendor/github.com/PuerkitoBio/goquery/**/*.sublime-*
+vendor/github.com/PuerkitoBio/goquery/**/.DS_Store
+vendor/github.com/PuerkitoBio/goquery/**/*.swp
+#*.*#
+vendor/github.com/PuerkitoBio/goquery/**/tags
+
+# direnv config
+vendor/github.com/PuerkitoBio/goquery/**/.env*
+
+# test binaries
+vendor/github.com/PuerkitoBio/goquery/**/*.test
+
+# coverage and profilte outputs
+vendor/github.com/PuerkitoBio/goquery/**/*.out
+
+
+# flyctl launch added from vendor/github.com/antchfx/htmlquery/.gitignore
+# vscode
+vendor/github.com/antchfx/htmlquery/**/.vscode
+vendor/github.com/antchfx/htmlquery/**/debug
+vendor/github.com/antchfx/htmlquery/**/*.test
+
+vendor/github.com/antchfx/htmlquery/**/build
+
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+vendor/github.com/antchfx/htmlquery/**/*.o
+vendor/github.com/antchfx/htmlquery/**/*.a
+vendor/github.com/antchfx/htmlquery/**/*.so
+
+
+# Folders
+vendor/github.com/antchfx/htmlquery/**/_obj
+vendor/github.com/antchfx/htmlquery/**/_test
+
+# Architecture specific extensions/prefixes
+vendor/github.com/antchfx/htmlquery/**/*.[568vq]
+vendor/github.com/antchfx/htmlquery/**/[568vq].out
+
+vendor/github.com/antchfx/htmlquery/**/*.cgo1.go
+vendor/github.com/antchfx/htmlquery/**/*.cgo2.c
+vendor/github.com/antchfx/htmlquery/**/_cgo_defun.c
+vendor/github.com/antchfx/htmlquery/**/_cgo_gotypes.go
+vendor/github.com/antchfx/htmlquery/**/_cgo_export.*
+
+vendor/github.com/antchfx/htmlquery/**/_testmain.go
+
+vendor/github.com/antchfx/htmlquery/**/*.exe
+vendor/github.com/antchfx/htmlquery/**/*.test
+vendor/github.com/antchfx/htmlquery/**/*.prof
+
+# flyctl launch added from vendor/github.com/antchfx/xmlquery/.gitignore
+# vscode
+vendor/github.com/antchfx/xmlquery/**/.vscode
+vendor/github.com/antchfx/xmlquery/**/debug
+vendor/github.com/antchfx/xmlquery/**/*.test
+
+vendor/github.com/antchfx/xmlquery/**/build
+
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+vendor/github.com/antchfx/xmlquery/**/*.o
+vendor/github.com/antchfx/xmlquery/**/*.a
+vendor/github.com/antchfx/xmlquery/**/*.so
+
+
+# Folders
+vendor/github.com/antchfx/xmlquery/**/_obj
+vendor/github.com/antchfx/xmlquery/**/_test
+
+# Architecture specific extensions/prefixes
+vendor/github.com/antchfx/xmlquery/**/*.[568vq]
+vendor/github.com/antchfx/xmlquery/**/[568vq].out
+
+vendor/github.com/antchfx/xmlquery/**/*.cgo1.go
+vendor/github.com/antchfx/xmlquery/**/*.cgo2.c
+vendor/github.com/antchfx/xmlquery/**/_cgo_defun.c
+vendor/github.com/antchfx/xmlquery/**/_cgo_gotypes.go
+vendor/github.com/antchfx/xmlquery/**/_cgo_export.*
+
+vendor/github.com/antchfx/xmlquery/**/_testmain.go
+
+vendor/github.com/antchfx/xmlquery/**/*.exe
+vendor/github.com/antchfx/xmlquery/**/*.test
+vendor/github.com/antchfx/xmlquery/**/*.prof
+
+# flyctl launch added from vendor/github.com/antchfx/xpath/.gitignore
+# vscode
+vendor/github.com/antchfx/xpath/**/.vscode
+vendor/github.com/antchfx/xpath/**/debug
+vendor/github.com/antchfx/xpath/**/*.test
+
+vendor/github.com/antchfx/xpath/**/build
+
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+vendor/github.com/antchfx/xpath/**/*.o
+vendor/github.com/antchfx/xpath/**/*.a
+vendor/github.com/antchfx/xpath/**/*.so
+
+
+# Folders
+vendor/github.com/antchfx/xpath/**/_obj
+vendor/github.com/antchfx/xpath/**/_test
+
+# Architecture specific extensions/prefixes
+vendor/github.com/antchfx/xpath/**/*.[568vq]
+vendor/github.com/antchfx/xpath/**/[568vq].out
+
+vendor/github.com/antchfx/xpath/**/*.cgo1.go
+vendor/github.com/antchfx/xpath/**/*.cgo2.c
+vendor/github.com/antchfx/xpath/**/_cgo_defun.c
+vendor/github.com/antchfx/xpath/**/_cgo_gotypes.go
+vendor/github.com/antchfx/xpath/**/_cgo_export.*
+
+vendor/github.com/antchfx/xpath/**/_testmain.go
+
+vendor/github.com/antchfx/xpath/**/*.exe
+vendor/github.com/antchfx/xpath/**/*.test
+vendor/github.com/antchfx/xpath/**/*.prof
+
+# flyctl launch added from vendor/github.com/fsnotify/fsnotify/.gitignore
+# go test -c output
+vendor/github.com/fsnotify/fsnotify/**/*.test
+vendor/github.com/fsnotify/fsnotify/**/*.test.exe
+
+# Output of go build ./cmd/fsnotify
+vendor/github.com/fsnotify/fsnotify/fsnotify
+
+# flyctl launch added from vendor/github.com/go-chi/chi/v5/.gitignore
+vendor/github.com/go-chi/chi/v5/**/.idea
+vendor/github.com/go-chi/chi/v5/**/*.sw?
+vendor/github.com/go-chi/chi/v5/**/.vscode
+
+# flyctl launch added from vendor/github.com/gobwas/glob/.gitignore
+vendor/github.com/gobwas/glob/**/glob.iml
+vendor/github.com/gobwas/glob/**/.idea
+vendor/github.com/gobwas/glob/**/*.cpu
+vendor/github.com/gobwas/glob/**/*.mem
+vendor/github.com/gobwas/glob/**/*.test
+vendor/github.com/gobwas/glob/**/*.dot
+vendor/github.com/gobwas/glob/**/*.png
+vendor/github.com/gobwas/glob/**/*.svg
+
+# flyctl launch added from vendor/github.com/hashicorp/hcl/.gitignore
+vendor/github.com/hashicorp/hcl/**/y.output
+
+# ignore intellij files
+vendor/github.com/hashicorp/hcl/**/.idea
+vendor/github.com/hashicorp/hcl/**/*.iml
+vendor/github.com/hashicorp/hcl/**/*.ipr
+vendor/github.com/hashicorp/hcl/**/*.iws
+
+vendor/github.com/hashicorp/hcl/**/*.test
+
+# flyctl launch added from vendor/github.com/kennygrant/sanitize/.gitignore
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+vendor/github.com/kennygrant/sanitize/**/*.o
+vendor/github.com/kennygrant/sanitize/**/*.a
+vendor/github.com/kennygrant/sanitize/**/*.so
+
+# Folders
+vendor/github.com/kennygrant/sanitize/**/_obj
+vendor/github.com/kennygrant/sanitize/**/_test
+
+# Architecture specific extensions/prefixes
+vendor/github.com/kennygrant/sanitize/**/*.[568vq]
+vendor/github.com/kennygrant/sanitize/**/[568vq].out
+
+vendor/github.com/kennygrant/sanitize/**/*.cgo1.go
+vendor/github.com/kennygrant/sanitize/**/*.cgo2.c
+vendor/github.com/kennygrant/sanitize/**/_cgo_defun.c
+vendor/github.com/kennygrant/sanitize/**/_cgo_gotypes.go
+vendor/github.com/kennygrant/sanitize/**/_cgo_export.*
+
+vendor/github.com/kennygrant/sanitize/**/_testmain.go
+
+vendor/github.com/kennygrant/sanitize/**/*.exe
+
+# flyctl launch added from vendor/github.com/magiconair/properties/.gitignore
+vendor/github.com/magiconair/properties/**/*.sublime-project
+vendor/github.com/magiconair/properties/**/*.sublime-workspace
+vendor/github.com/magiconair/properties/**/*.un~
+vendor/github.com/magiconair/properties/**/*.swp
+vendor/github.com/magiconair/properties/**/.idea
+vendor/github.com/magiconair/properties/**/*.iml
+
+# flyctl launch added from vendor/github.com/pelletier/go-toml/v2/.gitignore
+vendor/github.com/pelletier/go-toml/v2/**/test_program/test_program_bin
+vendor/github.com/pelletier/go-toml/v2/**/fuzz
+vendor/github.com/pelletier/go-toml/v2/**/cmd/tomll/tomll
+vendor/github.com/pelletier/go-toml/v2/**/cmd/tomljson/tomljson
+vendor/github.com/pelletier/go-toml/v2/**/cmd/tomltestgen/tomltestgen
+vendor/github.com/pelletier/go-toml/v2/**/dist
+
+# flyctl launch added from vendor/github.com/spf13/afero/.gitignore
+vendor/github.com/spf13/afero/**/sftpfs/file1
+vendor/github.com/spf13/afero/**/sftpfs/test
+
+# flyctl launch added from vendor/github.com/spf13/cast/.gitignore
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+vendor/github.com/spf13/cast/**/*.o
+vendor/github.com/spf13/cast/**/*.a
+vendor/github.com/spf13/cast/**/*.so
+
+# Folders
+vendor/github.com/spf13/cast/**/_obj
+vendor/github.com/spf13/cast/**/_test
+
+# Architecture specific extensions/prefixes
+vendor/github.com/spf13/cast/**/*.[568vq]
+vendor/github.com/spf13/cast/**/[568vq].out
+
+vendor/github.com/spf13/cast/**/*.cgo1.go
+vendor/github.com/spf13/cast/**/*.cgo2.c
+vendor/github.com/spf13/cast/**/_cgo_defun.c
+vendor/github.com/spf13/cast/**/_cgo_gotypes.go
+vendor/github.com/spf13/cast/**/_cgo_export.*
+
+vendor/github.com/spf13/cast/**/_testmain.go
+
+vendor/github.com/spf13/cast/**/*.exe
+vendor/github.com/spf13/cast/**/*.test
+
+vendor/github.com/spf13/cast/**/*.bench
+
+# flyctl launch added from vendor/github.com/spf13/jwalterweatherman/.gitignore
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+vendor/github.com/spf13/jwalterweatherman/**/*.o
+vendor/github.com/spf13/jwalterweatherman/**/*.a
+vendor/github.com/spf13/jwalterweatherman/**/*.so
+
+# Folders
+vendor/github.com/spf13/jwalterweatherman/**/_obj
+vendor/github.com/spf13/jwalterweatherman/**/_test
+
+# Architecture specific extensions/prefixes
+vendor/github.com/spf13/jwalterweatherman/**/*.[568vq]
+vendor/github.com/spf13/jwalterweatherman/**/[568vq].out
+
+vendor/github.com/spf13/jwalterweatherman/**/*.cgo1.go
+vendor/github.com/spf13/jwalterweatherman/**/*.cgo2.c
+vendor/github.com/spf13/jwalterweatherman/**/_cgo_defun.c
+vendor/github.com/spf13/jwalterweatherman/**/_cgo_gotypes.go
+vendor/github.com/spf13/jwalterweatherman/**/_cgo_export.*
+
+vendor/github.com/spf13/jwalterweatherman/**/_testmain.go
+
+vendor/github.com/spf13/jwalterweatherman/**/*.exe
+vendor/github.com/spf13/jwalterweatherman/**/*.bench
+vendor/github.com/spf13/jwalterweatherman/**/go.sum
+
+# flyctl launch added from vendor/github.com/spf13/pflag/.gitignore
+vendor/github.com/spf13/pflag/**/.idea/*
+
+
+# flyctl launch added from vendor/github.com/spf13/viper/.gitignore
+vendor/github.com/spf13/viper/.idea
+vendor/github.com/spf13/viper/bin
+vendor/github.com/spf13/viper/build
+vendor/github.com/spf13/viper/var
+vendor/github.com/spf13/viper/vendor
+
+# flyctl launch added from vendor/github.com/subosito/gotenv/.gitignore
+vendor/github.com/subosito/gotenv/**/*.test
+vendor/github.com/subosito/gotenv/**/*.out
+vendor/github.com/subosito/gotenv/**/annotate.json
+vendor/github.com/subosito/gotenv/**/profile.cov
+
+# flyctl launch added from vendor/github.com/temoto/robotstxt/.gitignore
+vendor/github.com/temoto/robotstxt/**/*.cgo?.*
+vendor/github.com/temoto/robotstxt/**/*.o
+vendor/github.com/temoto/robotstxt/**/*.so
+vendor/github.com/temoto/robotstxt/**/*.sublime-*
+vendor/github.com/temoto/robotstxt/**/.DS_Store
+vendor/github.com/temoto/robotstxt/**/.idea
+vendor/github.com/temoto/robotstxt/**/_cgo_*
+vendor/github.com/temoto/robotstxt/**/_obj
+vendor/github.com/temoto/robotstxt/**/_test
+vendor/github.com/temoto/robotstxt/**/coverage.txt
+
+# flyctl launch added from vendor/golang.org/x/sys/unix/.gitignore
+vendor/golang.org/x/sys/unix/**/_obj
+vendor/golang.org/x/sys/unix/**/unix.test
+
+# flyctl launch added from vendor/gopkg.in/ini.v1/.gitignore
+vendor/gopkg.in/ini.v1/**/testdata/conf_out.ini
+vendor/gopkg.in/ini.v1/**/ini.sublime-project
+vendor/gopkg.in/ini.v1/**/ini.sublime-workspace
+vendor/gopkg.in/ini.v1/**/testdata/conf_reflect.ini
+vendor/gopkg.in/ini.v1/**/.idea
+vendor/gopkg.in/ini.v1/.vscode
+vendor/gopkg.in/ini.v1/**/.DS_Store
+fly.toml

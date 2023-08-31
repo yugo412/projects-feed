@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 	"projects-rss/pkg"
 	"strconv"
 	"strings"
@@ -11,7 +12,6 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/gorilla/feeds"
-	"github.com/spf13/viper"
 )
 
 func GetProjects(w http.ResponseWriter, r *http.Request) {
@@ -72,7 +72,7 @@ func GetProjectsFeed(w http.ResponseWriter, r *http.Request) {
 		item := &feeds.Item{
 			Title: p.Title,
 			Link: &feeds.Link{
-				Href: fmt.Sprintf("%s/projects/go?to=%s", viper.GetString("APP_URL"), p.URL),
+				Href: fmt.Sprintf("%s/projects/go?to=%s", os.Getenv("URL"), p.URL),
 			},
 			Description: p.Description,
 			Author: &feeds.Author{
