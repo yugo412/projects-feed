@@ -6,6 +6,7 @@ require (
 	github.com/PuerkitoBio/goquery v1.5.1
 	github.com/go-chi/chi/v5 v5.0.10
 	github.com/gocolly/colly/v2 v2.1.0
+	github.com/patrickmn/go-cache v2.1.0+incompatible
 )
 
 require (

@@ -1,6 +1,7 @@
 package pkg
 
 import (
+	"crypto/md5"
 	"fmt"
 	"regexp"
 	"strings"
@@ -8,6 +9,7 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/gocolly/colly/v2"
+	memcache "github.com/patrickmn/go-cache"
 )
 
 const (
@@ -34,8 +36,21 @@ type Project struct {
 	Budget        Budget    `json:"-"`
 }
 
+var (
+	cache *memcache.Cache
+)
+
+func init() {
+	cache = memcache.New(5*time.Minute, 10*time.Hour)
+}
+
 func GetProjects(page uint, tag string) (projects []Project, err error) {
 	fullURL := fmt.Sprintf("https://projects.co.id/public/browse_projects/listing?search=%s&page=%d&ajax=1", tag, page)
+
+	cacheKey := fmt.Sprintf("page.%x", md5.Sum([]byte(fullURL)))
+	if cached, ok := cache.Get(cacheKey); ok {
+		return cached.([]Project), nil
+	}
 
 	spaces := regexp.MustCompile(`\s{2,}`)
 
@@ -96,6 +111,8 @@ func GetProjects(page uint, tag string) (projects []Project, err error) {
 	})
 
 	err = c.Visit(fullURL)
+
+	defer cache.Set(cacheKey, projects, 5*time.Minute)
 
 	return
 }
