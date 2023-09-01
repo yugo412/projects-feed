@@ -4,6 +4,7 @@ import (
 	"crypto/md5"
 	"fmt"
 	"regexp"
+	"strconv"
 	"strings"
 	"time"
 
@@ -34,7 +35,7 @@ type Project struct {
 	PublishedDate time.Time `json:"published_date"`
 	Tags          []string  `json:"tags"`
 	Author        Author    `json:"author"`
-	Budget        Budget    `json:"-"`
+	Budget        Budget    `json:"budget"`
 }
 
 var (
@@ -79,8 +80,11 @@ func GetProjects(page uint, tag string) (projects []Project, err error) {
 				tags = append(tags, strings.TrimSpace(t.Text()))
 			})
 
-			var publishedDate time.Time
+			var pubTime time.Time
+			var budget Budget
 			p.Find(".col-md-6.align-left").Contents().EachWithBreak(func(i int, s *goquery.Selection) bool {
+				// parse published date
+				// sometimes, date is not ordered correctly from origin source
 				if s.Is("strong") && strings.TrimSpace(s.Text()) == "Published Date:" {
 					nextNode := s.Get(0).NextSibling
 					if nextNode != nil && nextNode.Data != "strong" {
@@ -88,11 +92,32 @@ func GetProjects(page uint, tag string) (projects []Project, err error) {
 						match := re.FindStringSubmatch(nextNode.Data)
 						if len(match) > 1 {
 							loc, _ := time.LoadLocation(DefaultTimezone)
-							publishedDate, _ = time.ParseInLocation("02/01/2006 15:04:05", match[1], loc)
+							pubTime, _ = time.ParseInLocation("02/01/2006 15:04:05", match[1], loc)
 						}
 					}
 					return false
 				}
+
+				p.Find(".col-md-6.align-left").Each(func(i int, s *goquery.Selection) {
+					if strings.Contains(s.Text(), "Published Budget:") {
+						text := s.Contents().Not("strong").Text()
+						re := regexp.MustCompile(`([\d,]+ - [\d,]+)`)
+						match := re.FindStringSubmatch(text)
+						if len(match) >= 2 {
+							// convert budget range to separate amount
+							// as float64
+							ranges := strings.Split(match[1], "-")
+
+							san := func(n string) string {
+								n = strings.ReplaceAll(n, ",", "")
+								return strings.TrimSpace(n)
+							}
+							budget.Min, _ = strconv.ParseFloat(san(ranges[0]), 64)
+							budget.Max, _ = strconv.ParseFloat(san(ranges[1]), 64)
+						}
+					}
+				})
+
 				return true
 			})
 
@@ -101,7 +126,8 @@ func GetProjects(page uint, tag string) (projects []Project, err error) {
 				Title:         strings.TrimSpace(project.Text()),
 				URL:           url,
 				Description:   spaces.ReplaceAllString(desc, ""),
-				PublishedDate: publishedDate,
+				PublishedDate: pubTime,
+				Budget:        budget,
 				Tags:          tags,
 			})
 		})
