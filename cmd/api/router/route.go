@@ -16,6 +16,7 @@ func init() {
 
 	env := os.Getenv("ENV")
 	if env != "production" {
+		c.Use(middleware.RequestID)
 		c.Use(middleware.Logger)
 	}
 
