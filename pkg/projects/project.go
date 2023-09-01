@@ -38,10 +38,15 @@ type Project struct {
 	Budget      Budget    `json:"budget"`
 }
 
+type cacheResponse struct {
+	StartedAt time.Time `json:"started_at"`
+	FlushedAt time.Time `json:"flushed_at"`
+}
+
 type response struct {
-	ServerTime time.Time `json:"server_time"`
-	CachedAt   time.Time `json:"cached_at"`
-	Data       []Project `json:"data"`
+	Data       []Project     `json:"data"`
+	ServerTime time.Time     `json:"server_time"`
+	Cache      cacheResponse `json:"cache"`
 }
 
 var (
@@ -154,7 +159,10 @@ func GetProjects(page uint, tag string) (r response, err error) {
 	err = c.Visit(fullURL)
 
 	r.ServerTime = now
-	r.CachedAt = r.ServerTime
+	r.Cache = cacheResponse{
+		StartedAt: now,
+		FlushedAt: now.Add(DefaultCacheExpire * time.Minute),
+	}
 	cache.SetDefault(cacheKey, r)
 
 	return
