@@ -68,7 +68,7 @@ func GetProjectsFeed(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	for _, p := range projects {
+	for _, p := range projects.Data {
 		item := &feeds.Item{
 			Title: p.Title,
 			Link: &feeds.Link{
@@ -78,7 +78,7 @@ func GetProjectsFeed(w http.ResponseWriter, r *http.Request) {
 			Author: &feeds.Author{
 				Name: p.Author.Name,
 			},
-			Created: p.PublishedDate,
+			Created: p.PublishedAt,
 		}
 
 		feed.Items = append(feed.Items, item)

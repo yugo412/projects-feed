@@ -15,7 +15,7 @@ import (
 
 const (
 	DefaultTimezone    = "Asia/Jakarta"
-	DefaultCacheExpire = 10 // in minutes
+	DefaultCacheExpire = 15 // in minutes
 )
 
 type Author struct {
@@ -29,13 +29,19 @@ type Budget struct {
 }
 
 type Project struct {
-	Title         string    `json:"title"`
-	URL           string    `json:"url"`
-	Description   string    `json:"description"`
-	PublishedDate time.Time `json:"published_date"`
-	Tags          []string  `json:"tags"`
-	Author        Author    `json:"author"`
-	Budget        Budget    `json:"budget"`
+	Title       string    `json:"title"`
+	URL         string    `json:"url"`
+	Description string    `json:"description"`
+	PublishedAt time.Time `json:"published_at"`
+	Tags        []string  `json:"tags"`
+	Author      Author    `json:"author"`
+	Budget      Budget    `json:"budget"`
+}
+
+type response struct {
+	ServerTime time.Time `json:"server_time"`
+	CachedAt   time.Time `json:"cached_at"`
+	Data       []Project `json:"data"`
 }
 
 var (
@@ -43,15 +49,23 @@ var (
 )
 
 func init() {
-	cache = memcache.New(5*time.Minute, 10*time.Hour)
+	cache = memcache.New(
+		DefaultCacheExpire*time.Minute,
+		(DefaultCacheExpire+10)*time.Hour,
+	)
 }
 
-func GetProjects(page uint, tag string) (projects []Project, err error) {
+func GetProjects(page uint, tag string) (r response, err error) {
+	now := time.Now().Local()
+
 	fullURL := fmt.Sprintf("https://projects.co.id/public/browse_projects/listing?search=%s&page=%d&ajax=1", tag, page)
 
 	cacheKey := fmt.Sprintf("page.%x", md5.Sum([]byte(fullURL)))
 	if cached, ok := cache.Get(cacheKey); ok {
-		return cached.([]Project), nil
+		r = cached.(response)
+		r.ServerTime = now
+
+		return
 	}
 
 	spaces := regexp.MustCompile(`\s{2,}`)
@@ -121,14 +135,14 @@ func GetProjects(page uint, tag string) (projects []Project, err error) {
 				return true
 			})
 
-			projects = append(projects, Project{
-				Author:        author,
-				Title:         strings.TrimSpace(project.Text()),
-				URL:           url,
-				Description:   spaces.ReplaceAllString(desc, ""),
-				PublishedDate: pubTime,
-				Budget:        budget,
-				Tags:          tags,
+			r.Data = append(r.Data, Project{
+				Author:      author,
+				Title:       strings.TrimSpace(project.Text()),
+				URL:         url,
+				Description: spaces.ReplaceAllString(desc, ""),
+				PublishedAt: pubTime,
+				Budget:      budget,
+				Tags:        tags,
 			})
 		})
 	})
@@ -139,7 +153,9 @@ func GetProjects(page uint, tag string) (projects []Project, err error) {
 
 	err = c.Visit(fullURL)
 
-	cache.Set(cacheKey, projects, DefaultCacheExpire*time.Minute)
+	r.ServerTime = now
+	r.CachedAt = r.ServerTime
+	cache.SetDefault(cacheKey, r)
 
 	return
 }
