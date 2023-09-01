@@ -13,7 +13,8 @@ import (
 )
 
 const (
-	DefaultTimezone = "Asia/Jakarta"
+	DefaultTimezone    = "Asia/Jakarta"
+	DefaultCacheExpire = 10 // in minutes
 )
 
 type Author struct {
@@ -112,7 +113,7 @@ func GetProjects(page uint, tag string) (projects []Project, err error) {
 
 	err = c.Visit(fullURL)
 
-	defer cache.Set(cacheKey, projects, 5*time.Minute)
+	cache.Set(cacheKey, projects, DefaultCacheExpire*time.Minute)
 
 	return
 }
