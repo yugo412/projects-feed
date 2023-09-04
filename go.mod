@@ -8,6 +8,7 @@ require (
 	github.com/gocolly/colly/v2 v2.1.0
 	github.com/gorilla/feeds v1.1.1
 	github.com/patrickmn/go-cache v2.1.0+incompatible
+	github.com/xeonx/timeago v1.0.0-rc5
 )
 
 require (

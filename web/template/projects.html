@@ -1,0 +1,195 @@
+<!doctype html>
+<!--
+  * Tabler - Premium and Open Source dashboard template with responsive and high quality UI.
+  * @version 1.0.0-beta19
+  * @link https://tabler.io
+  * Copyright 2018-2023 The Tabler Authors
+  * Copyright 2018-2023 codecalm.net Paweł Kuna
+  * Licensed under MIT (https://github.com/tabler/tabler/blob/master/LICENSE)
+  -->
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+  <title>Projects Feed</title>
+  <!-- CSS files -->
+  <link href="/static/css/tabler.min.css?1684106062" rel="stylesheet"/>
+  <style>
+      @import url('https://rsms.me/inter/inter.css');
+      :root {
+          --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+      }
+      body {
+          font-feature-settings: "cv03", "cv04", "cv11";
+      }
+  </style>
+</head>
+<body >
+<div class="page">
+  <!-- Navbar -->
+  <header class="navbar navbar-expand-md d-print-none" >
+    <div class="container-xl">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
+        <a href=".">
+          <img src="/static/img/logo-small.svg" width="110" height="32" alt="Projects Feed" class="navbar-brand-image">
+        </a>
+        Projects Feed
+      </h1>
+      <div class="navbar-nav flex-row order-md-last">
+        <div class="nav-item d-none d-md-flex">
+          <div class="btn-list">
+            <a href="https://github.com/yugo412/projects-feed" class="btn" target="_blank" rel="noreferrer">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+              </svg>
+              Source code
+            </a>
+            <a href="/projects/rss" class="btn btn-warning" target="_blank" rel="noreferrer">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M5 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                <path d="M4 4a16 16 0 0 1 16 16"></path>
+                <path d="M4 11a9 9 0 0 1 9 9"></path>
+              </svg>
+              RSS
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="page-wrapper">
+    <div class="page-header d-print-none">
+      <div class="container-xl">
+        <div class="row g-2 align-items-center">
+          <div class="col">
+            <h2 class="page-title">
+              Latest Projects
+            </h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Page body -->
+    <div class="page-body">
+      <div class="container-xl">
+        <div class="row g-4">
+          <div class="col-md-12">
+            <div class="row row-cards">
+              <div class="space-y">
+                {{range .Data}}
+                <div class="card">
+                  <div class="row g-0">
+                    <div class="col-auto">
+                      <div class="card-body">
+                        <div class="avatar avatar-md" style="background-image: url(/static/img/projects.png)"></div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card-body ps-0">
+                        <div class="row">
+                          <div class="col">
+                            <h3 class="mb-0"><a href="/projects/go?to={{.URL}}">{{.Title}}</a></h3>
+                            <div class="col-auto fs-3 text-green">{{.GetBudget}}</div>
+                          </div>
+                          <p class="mt-2">{{.Description}}</p>
+                        </div>
+                        <div class="row">
+                          <div class="col-md">
+                            <div class="mt-3 list-inline list-inline-dots mb-0 text-secondary d-sm-block d-none">
+                              <div class="list-inline-item"><!-- Download SVG icon from http://tabler-icons.io/i/building-community -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8"></path><path d="M13 7l0 .01"></path><path d="M17 7l0 .01"></path><path d="M17 11l0 .01"></path><path d="M17 15l0 .01"></path></svg>
+                                <a href="/projects/go?to={{.Author.URL}}">{{.Author.Name}}</a></div>
+                              <div class="list-inline-item"><!-- Download SVG icon from http://tabler-icons.io/i/license -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2m2 -4h-11a3 3 0 0 0 -3 3v11"></path><path d="M9 7l4 0"></path><path d="M9 11l4 0"></path></svg>
+                                {{.Timeago}}</div>
+<!--                              <div class="list-inline-item">&lt;!&ndash; Download SVG icon from http://tabler-icons.io/i/map-pin &ndash;&gt;-->
+<!--                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"></path></svg>-->
+<!--                                Remote / USA</div>-->
+                            </div>
+                            <div class="mt-3 list mb-0 text-secondary d-block d-sm-none">
+                              <div class="list-item"><!-- Download SVG icon from http://tabler-icons.io/i/building-community -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8"></path><path d="M13 7l0 .01"></path><path d="M17 7l0 .01"></path><path d="M17 11l0 .01"></path><path d="M17 15l0 .01"></path></svg>
+                                <a href="/projects/go?to={{.Author.URL}}">{{.Author.Name}}</a></div>
+                              <div class="list-item"><!-- Download SVG icon from http://tabler-icons.io/i/license -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2m2 -4h-11a3 3 0 0 0 -3 3v11"></path><path d="M9 7l4 0"></path><path d="M9 11l4 0"></path></svg>
+                                {{.Timeago}}</div>
+<!--                              <div class="list-item">&lt;!&ndash; Download SVG icon from http://tabler-icons.io/i/map-pin &ndash;&gt;-->
+<!--                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"></path></svg>-->
+<!--                                Remote / USA</div>-->
+                            </div>
+                          </div>
+                          <div class="col-md-auto">
+                            <div class="mt-3 badges">
+                              {{range .LimitedTags 3}}
+                                <a href="?tag={{.}}" class="badge badge-outline text-muted border fw-normal badge-pill">{{.}}</a>
+                              {{end}}
+
+                              {{if (gt .RemainTag 3)}}
+                              <span class="badge badge-outline text-muted border fw-normal badge-pill">+ {{.RemainTag}}</span>
+                              {{end}}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {{end}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <footer class="footer footer-transparent d-print-none">
+      <div class="container-xl">
+        <div class="row text-center align-items-center flex-row-reverse">
+          <div class="col-lg-auto ms-lg-auto">
+            <ul class="list-inline list-inline-dots mb-0">
+              <li class="list-inline-item"><a href="https://tabler.io/docs" target="_blank" class="link-secondary" rel="noopener">Documentation</a></li>
+              <li class="list-inline-item"><a href="./license.html" class="link-secondary">License</a></li>
+              <li class="list-inline-item"><a href="https://github.com/tabler/tabler" target="_blank" class="link-secondary" rel="noopener">Source code</a></li>
+              <li class="list-inline-item">
+                <a href="https://github.com/sponsors/codecalm" target="_blank" class="link-secondary" rel="noopener">
+                  <!-- Download SVG icon from http://tabler-icons.io/i/heart -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon text-pink icon-filled icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+                  </svg>
+                  Sponsor
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+            <ul class="list-inline list-inline-dots mb-0">
+              <li class="list-inline-item">
+                Copyright &copy; 2023
+                <a href="." class="link-secondary">Tabler</a>.
+                All rights reserved.
+              </li>
+              <li class="list-inline-item">
+                <a href="./changelog.html" class="link-secondary" rel="noopener">
+                  v1.0.0-beta19
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>
+<!-- Libs JS -->
+<!-- Tabler Core -->
+<script src="/static/js/tabler.min.js?1684106062" defer></script>
+</body>
+</html>

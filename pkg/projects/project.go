@@ -11,6 +11,9 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"github.com/gocolly/colly/v2"
 	memcache "github.com/patrickmn/go-cache"
+	"github.com/xeonx/timeago"
+	"golang.org/x/text/language"
+	"golang.org/x/text/message"
 )
 
 const (
@@ -58,6 +61,32 @@ func init() {
 		DefaultCacheExpire*time.Minute,
 		(DefaultCacheExpire+10)*time.Hour,
 	)
+}
+
+func (p Project) LimitedTags(limit int) []string {
+	if len(p.Tags) > limit {
+		return p.Tags[:limit]
+	}
+
+	return p.Tags
+}
+
+func (p Project) RemainTag() int {
+	if len(p.Tags) > 3 {
+		return len(p.Tags) - 3
+	}
+
+	return 0
+}
+
+func (p Project) Timeago() string {
+	return timeago.English.Format(p.PublishedAt)
+}
+
+func (p Project) GetBudget() string {
+	printer := message.NewPrinter(language.Indonesian)
+
+	return printer.Sprintf("Rp%.0f - Rp%0.f", p.Budget.Min, p.Budget.Max)
 }
 
 func GetProjects(page uint, tag string) (r response, err error) {

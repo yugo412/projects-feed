@@ -3,8 +3,11 @@ package handler
 import (
 	"encoding/json"
 	"fmt"
+	"html/template"
+	"log"
 	"net/http"
 	"os"
+	"path"
 	"projects-feed/pkg/projects"
 	"strconv"
 	"strings"
@@ -13,6 +16,33 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/gorilla/feeds"
 )
+
+func Index(w http.ResponseWriter, r *http.Request) {
+	template, err := template.ParseFiles(path.Join("web", "template", "projects.html"))
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(err.Error()))
+
+		return
+	}
+
+	var tag string
+	if t := r.URL.Query().Get("tag"); t != "" {
+		tag = t
+	}
+
+	projects, err := projects.GetProjects(1, tag)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("Internal server error."))
+
+		log.Println("Failed to get projects:", err)
+
+		return
+	}
+
+	template.Execute(w, projects)
+}
 
 func GetProjects(w http.ResponseWriter, r *http.Request) {
 	tag := ""
