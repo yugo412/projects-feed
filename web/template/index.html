@@ -15,6 +15,9 @@
     <title>Projects Feed</title>
     <!-- CSS files -->
     <link href="/public/css/tabler.min.css?1684106062" rel="stylesheet"/>
+
+    <link rel="alternate" type="application/rss+xml" title="Projects Feed RSS" href="/projects/rss"/>
+    <link rel="alternate" type="application/rss+atom" title="Projects Feed ATOM" href="/projects/atom"/>
     <style>
         @import url('https://rsms.me/inter/inter.css');
         :root {
@@ -66,7 +69,7 @@
                 <div class="col-md-12">
                     <div class="row row-cards">
                         <div class="space-y">
-                            {{range .Data}}
+                            {{range .projects}}
                             <div class="card">
                                 <div class="row g-0">
                                     <div class="col-auto">
