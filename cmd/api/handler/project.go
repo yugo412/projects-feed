@@ -31,7 +31,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		tag = t
 	}
 
-	projects, err := projects.GetProjects(1, tag)
+	projects, err := projects.New("projects").GetProjects(1, tag)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("Internal server error."))
@@ -41,7 +41,9 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = template.Execute(w, projects)
+	err = template.Execute(w, map[string]interface{}{
+		"projects": projects,
+	})
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
@@ -61,7 +63,7 @@ func GetProjects(w http.ResponseWriter, r *http.Request) {
 		page = n
 	}
 
-	projects, err := projects.GetProjects(uint(page), tag)
+	projects, err := projects.New("projects").GetProjects(page, tag)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
@@ -96,7 +98,7 @@ func GetProjectsFeed(w http.ResponseWriter, r *http.Request) {
 	if q := r.URL.Query().Get("tag"); q != "" {
 		tag = q
 	}
-	projects, err := projects.GetProjects(1, tag)
+	projects, err := projects.New("projects").GetProjects(1, tag)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
@@ -104,7 +106,7 @@ func GetProjectsFeed(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	for _, p := range projects.Data {
+	for _, p := range projects {
 		item := &feeds.Item{
 			Title: p.Title,
 			Link: &feeds.Link{
