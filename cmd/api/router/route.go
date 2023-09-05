@@ -28,8 +28,8 @@ func init() {
 	c.Use(middleware.Recoverer)
 
 	// service static files
-	fileServer := http.FileServer(http.Dir("./public"))
-	c.Handle("/static/*", http.StripPrefix("/static/", fileServer))
+	fileServer := http.FileServer(http.Dir("./web/asset"))
+	c.Handle("/public/*", http.StripPrefix("/public/", fileServer))
 }
 
 func RegisterRoutes() *chi.Mux {
