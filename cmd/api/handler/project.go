@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"os"
 	"path"
-	"projects-feed/pkg/projects"
+	"projects-feed/internal"
 	"strconv"
 	"strings"
 	"time"
@@ -31,7 +31,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		tag = t
 	}
 
-	projects, err := projects.New("projects").GetProjects(1, tag)
+	projects, err := internal.GetProjects(1, tag)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("Internal server error."))
@@ -63,7 +63,7 @@ func GetProjects(w http.ResponseWriter, r *http.Request) {
 		page = n
 	}
 
-	projects, err := projects.New("projects").GetProjects(page, tag)
+	projects, err := internal.GetProjects(page, tag)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
@@ -98,7 +98,7 @@ func GetProjectsFeed(w http.ResponseWriter, r *http.Request) {
 	if q := r.URL.Query().Get("tag"); q != "" {
 		tag = q
 	}
-	projects, err := projects.New("projects").GetProjects(1, tag)
+	projects, err := internal.GetProjects(1, tag)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
