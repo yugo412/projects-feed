@@ -4,6 +4,7 @@ import (
 	"crypto/md5"
 	"fmt"
 	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -173,7 +174,7 @@ func GetProjects(page uint, tag string) (r response, err error) {
 				Author:      author,
 				Title:       strings.TrimSpace(project.Text()),
 				URL:         url,
-				Description: spaces.ReplaceAllString(desc, ""),
+				Description: spaces.ReplaceAllString(desc, " "),
 				PublishedAt: pubTime,
 				Budget:      budget,
 				Tags:        tags,
@@ -186,6 +187,11 @@ func GetProjects(page uint, tag string) (r response, err error) {
 	})
 
 	err = c.Visit(fullURL)
+
+	// some responses are not order correctly
+	sort.Slice(r.Data, func(i, j int) bool {
+		return r.Data[j].PublishedAt.Before(r.Data[i].PublishedAt)
+	})
 
 	r.ServerTime = now
 	r.Cache = cacheResponse{
