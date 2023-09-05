@@ -33,6 +33,7 @@ type Budget struct {
 }
 
 type Project struct {
+	Vendor      string    `json:"vendor"`
 	Title       string    `json:"title"`
 	URL         string    `json:"url"`
 	Description string    `json:"description"`
@@ -171,6 +172,7 @@ func GetProjects(page uint, tag string) (r response, err error) {
 			})
 
 			r.Data = append(r.Data, Project{
+				Vendor:      "Projects.co.id",
 				Author:      author,
 				Title:       strings.TrimSpace(project.Text()),
 				URL:         url,
