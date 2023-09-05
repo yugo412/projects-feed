@@ -23,8 +23,9 @@ const (
 )
 
 type Author struct {
-	Name string `json:"name"`
-	URL  string `json:"url"`
+	Name      string `json:"name"`
+	URL       string `json:"url"`
+	AvatarURL string `json:"avatar_url"`
 }
 
 type Budget struct {
@@ -113,6 +114,10 @@ func GetProjects(page uint, tag string) (r response, err error) {
 		// author's info
 		e.DOM.Find("div.col-md-2").Each(func(_ int, a *goquery.Selection) {
 			pub := a.Find("a.short-username").First()
+			avatar, exists := a.Find("a > img.img-thumbnail").First().Attr("src")
+			if exists {
+				author.AvatarURL = avatar
+			}
 
 			author.Name = strings.TrimSpace(pub.Text())
 			author.URL, _ = pub.Attr("href")

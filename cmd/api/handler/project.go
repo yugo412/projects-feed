@@ -18,7 +18,7 @@ import (
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	template, err := template.ParseFiles(path.Join("web", "template", "projects.html"))
+	template, err := template.ParseFiles(path.Join("web", "template", "index.html"))
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
@@ -41,7 +41,13 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	template.Execute(w, projects)
+	err = template.Execute(w, projects)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(err.Error()))
+
+		return
+	}
 }
 
 func GetProjects(w http.ResponseWriter, r *http.Request) {
