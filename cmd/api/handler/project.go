@@ -43,6 +43,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 
 	err = template.Execute(w, map[string]interface{}{
 		"projects": projects,
+		"tag":      tag,
 	})
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
