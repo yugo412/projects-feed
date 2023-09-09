@@ -1,6 +1,7 @@
-package projects
+package project
 
 import (
+	"fmt"
 	"strings"
 	"time"
 
@@ -16,6 +17,7 @@ type Vendor interface {
 
 type Author struct {
 	Name      string `json:"name"`
+	Username  string `json:"username"`
 	URL       string `json:"url"`
 	AvatarURL string `json:"avatar_url"`
 }
@@ -36,6 +38,8 @@ type Project struct {
 	Budget      Budget    `json:"budget"`
 }
 
+var LogRequestFormat = "Requesting projects data from %s: %s"
+
 func New(vendor string) Vendor {
 	vendor = strings.TrimSpace(vendor)
 
@@ -44,9 +48,31 @@ func New(vendor string) Vendor {
 		return &Projects{
 			BaseURL: "https://projects.co.id",
 		}
+	case "sribu":
+		return &Sribu{
+			BaseURL: "https://api.sribu.com",
+		}
 	}
 
 	return nil
+}
+
+func (p Project) SanitizedVendor() string {
+	name := strings.ToLower(p.Vendor)
+	names := strings.Split(name, ".")
+	if len(names) >= 1 {
+		return names[0]
+	}
+
+	return strings.ToLower(name)
+}
+
+func (p Project) LimitedDescription(length int) string {
+	if len(p.Description) > length && p.Description != "" {
+		return fmt.Sprint(p.Description[:length], "...")
+	}
+
+	return p.Description
 }
 
 func (p Project) LimitedTags(limit int) []string {
@@ -70,7 +96,14 @@ func (p Project) Timeago() string {
 }
 
 func (p Project) GetBudget() string {
+	if p.Budget.Min == 0 || p.Budget.Max == 0 {
+		return ""
+	}
+
 	printer := message.NewPrinter(language.Indonesian)
+	if p.Budget.Min == p.Budget.Max {
+		return printer.Sprintf("Rp%.0f", p.Budget.Min)
+	}
 
 	return printer.Sprintf("Rp%.0f - Rp%0.f", p.Budget.Min, p.Budget.Max)
 }
