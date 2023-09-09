@@ -18,7 +18,7 @@ import (
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	template, err := template.ParseFiles(path.Join("web", "template", "index.html"))
+	t, err := template.ParseFiles(path.Join("web", "template", "index.html"))
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
@@ -46,10 +46,20 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = template.Execute(w, map[string]interface{}{
+	title := "Projects Feed"
+	if tag != "" {
+		title = fmt.Sprintf("%s for %s", title, tag)
+	}
+	if vendor != "" {
+		title = fmt.Sprintf("%s from %s", title, vendor)
+	}
+
+	err = t.Execute(w, map[string]interface{}{
 		"projects": projects,
 		"vendor":   vendor,
 		"tag":      tag,
+		"query":    template.URL(r.URL.RawQuery),
+		"title":    title,
 	})
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)

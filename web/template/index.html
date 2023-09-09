@@ -16,8 +16,8 @@
     <!-- CSS files -->
     <link href="/public/css/tabler.min.css?1684106062" rel="stylesheet"/>
 
-    <link rel="alternate" type="application/rss+xml" title="Projects Feed RSS" href="/projects/rss"/>
-    <link rel="alternate" type="application/rss+atom" title="Projects Feed ATOM" href="/projects/atom"/>
+    <link rel="alternate" type="application/rss+xml" title="{{.title}}" href="/projects/rss?{{.query}}"/>
+    <link rel="alternate" type="application/rss+atom" title="{{.title}}" href="/projects/atom{{.query}}"/>
     <style>
         @import url('https://rsms.me/inter/inter.css');
         :root {
@@ -146,7 +146,7 @@
                                                                     <path d="M9 15l0 .01"></path>
                                                                     <path d="M9 18l0 .01"></path>
                                                                 </svg>
-                                                                <a href="/?vendor={{.SanitizedVendor}}">{{.Vendor}}</a>
+                                                                <a href="/?vendor={{.Vendor}}">{{.Vendor}}</a>
                                                             </div>
                                                         </div>
                                                         <div class="mt-3 list mb-0 text-secondary d-block d-sm-none">
