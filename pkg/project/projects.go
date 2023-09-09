@@ -1,4 +1,4 @@
-package projects
+package project
 
 import (
 	"fmt"
@@ -54,6 +54,7 @@ func (p *Projects) GetProjects(page int, tag string) (r []Project, err error) {
 			}
 
 			author.Name = strings.TrimSpace(pub.Text())
+			author.Username = author.Name
 			author.URL, _ = pub.Attr("href")
 		})
 
@@ -124,7 +125,7 @@ func (p *Projects) GetProjects(page int, tag string) (r []Project, err error) {
 	})
 
 	c.OnRequest(func(req *colly.Request) {
-		log.Println("Requesting to:", req.URL.String())
+		log.Printf(LogRequestFormat, p.Name(), req.URL.String())
 	})
 
 	err = c.Visit(target.String())
