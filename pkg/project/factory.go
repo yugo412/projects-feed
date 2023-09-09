@@ -41,7 +41,7 @@ type Project struct {
 var LogRequestFormat = "Requesting projects data from %s: %s"
 
 func New(vendor string) Vendor {
-	vendor = strings.TrimSpace(vendor)
+	vendor = strings.ToLower(strings.TrimSpace(vendor))
 
 	switch vendor {
 	case "projects":
