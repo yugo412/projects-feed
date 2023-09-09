@@ -26,12 +26,17 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var vendor string
+	if v := r.URL.Query().Get("vendor"); v != "" {
+		vendor = v
+	}
+
 	var tag string
 	if t := r.URL.Query().Get("tag"); t != "" {
 		tag = t
 	}
 
-	projects, err := internal.GetProjects(1, tag)
+	projects, err := internal.GetProjects(vendor, 1, tag)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("Internal server error."))
@@ -43,6 +48,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 
 	err = template.Execute(w, map[string]interface{}{
 		"projects": projects,
+		"vendor":   vendor,
 		"tag":      tag,
 	})
 	if err != nil {
@@ -64,7 +70,12 @@ func GetProjects(w http.ResponseWriter, r *http.Request) {
 		page = n
 	}
 
-	projects, err := internal.GetProjects(page, tag)
+	vendor := ""
+	if v := r.URL.Query().Get("vendor"); v != "" {
+		vendor = v
+	}
+
+	projects, err := internal.GetProjects(vendor, page, tag)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
@@ -95,11 +106,17 @@ func GetProjectsFeed(w http.ResponseWriter, r *http.Request) {
 		Created: time.Now().Local(),
 	}
 
+	var vendor string
+	if v := r.URL.Query().Get("vendor"); v != "" {
+		vendor = v
+	}
+
 	tag := ""
 	if q := r.URL.Query().Get("tag"); q != "" {
 		tag = q
 	}
-	projects, err := internal.GetProjects(1, tag)
+
+	projects, err := internal.GetProjects(vendor, 1, tag)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
