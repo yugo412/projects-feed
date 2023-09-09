@@ -9,15 +9,15 @@ Projects feed is a project aggregator and RSS provider from various (freelancer)
 
 There are 3 different available content, HTML, JSON, and Feed (RSS feed, ATOM feed, & JSON feed).
 
-The HTML response is provided for end users to view available projects directly from their browsers. By accessing the domain [projects-feed.fly.io](https://projects-feed.fly.io), you can see the default project as HTML.
+The HTML response is provided for end users to view available projects directly from their browsers. By accessing the domain [projects-feed.fly.dev](https://projects-feed.fly.dev), you can see the default project as HTML.
 
-RSS provides formatted XML for feeds. By accessing URL [projects-feed.fly.io/projects/rss](https://projects-feed.fly.io/projects/rss), you can see XML that you can use to subscribe to the feed. Different formats for the feed are available. You can change the format by changing the suffix based on the type. For example:
+RSS provides formatted XML for feeds. By accessing URL [projects-feed.fly.dev/projects/rss](https://projects-feed.fly.dev/projects/rss), you can see XML that you can use to subscribe to the feed. Different formats for the feed are available. You can change the format by changing the suffix based on the type. For example:
 
 ```bash
-https://projects-feed.fly.io/projects/atom: will respond as an RSS feed
-https://projects-feed.fly.io/projects/json: will respond as a JSON feed
+https://projects-feed.fly.dev/projects/atom: will respond as an RSS feed
+https://projects-feed.fly.dev/projects/json: will respond as a JSON feed
 ```
-While JSON feed has limited data on structure, you can also fetch projects as complete JSON by accessing the URL [projects-feed.fly.io/projects](https://projects-feed.fly.io/projects). The response provides complete enough data if you want to develop different features based on the feed.
+While JSON feed has limited data on structure, you can also fetch projects as complete JSON by accessing the URL [projects-feed.fly.dev/projects](https://projects-feed.fly.dev/projects). The response provides complete enough data if you want to develop different features based on the feed.
 
 > **Note:**
 > Every content data is cached for 15 minutes to reduce requests to project providers and improve performance.
@@ -34,7 +34,7 @@ If you want to filter the response for a specific vendor, you can add the query 
 
 You can also filter projects by their category by adding the query `tag=name` to the URL. Here are example generated URLs to filter by category:
 
-- For HTML: [https://projects-feed.fly.io?tag=SEO](https://projects-feed.fly.io?tag=SEO)
+- For HTML: [https://projects-feed.fly.dev?tag=SEO](https://projects-feed.fly.dev?tag=SEO)
 - For JSON response (API): [https://projects-feed.fly.dev/projects?tag=Video%20Editing](https://projects-feed.fly.dev/projects?tag=Video%20Editing)
 - For feed: [https://projects-feed.fly.dev/projects/rss?tag=Video%20Editing](https://projects-feed.fly.dev/projects/rss?tag=Video%20Editing)
 
