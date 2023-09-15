@@ -2,32 +2,19 @@ package internal
 
 import (
 	"fmt"
+	"projects-feed/pkg/cache"
 	"projects-feed/pkg/project"
 	"sort"
 	"strings"
 	"sync"
-	"time"
-
-	"github.com/patrickmn/go-cache"
 )
-
-const CacheExpiration = 15 // in minutes
-
-var memcache *cache.Cache
-
-func init() {
-	memcache = cache.New(
-		time.Minute*CacheExpiration,
-		time.Minute*(CacheExpiration+5),
-	)
-}
 
 func GetProjects(vendor string, page int, tag string) (p []project.Project, err error) {
 	key := fmt.Sprintf("vendor%spage%dtag%s", vendor, page, tag)
 
-	cached, exists := memcache.Get(key)
-	if exists {
-		return cached.([]project.Project), nil
+	c := cache.New("memory")
+	if val, err := c.Get(key); err == nil && c != nil {
+		return val.([]project.Project), nil
 	}
 
 	var vendors []string
@@ -69,7 +56,7 @@ func GetProjects(vendor string, page int, tag string) (p []project.Project, err 
 		return p[j].PublishedAt.Before(p[i].PublishedAt)
 	})
 
-	memcache.SetDefault(key, p)
+	c.Set(key, p)
 
 	return
 }
