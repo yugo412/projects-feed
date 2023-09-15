@@ -12,6 +12,7 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/gocolly/colly/v2"
+	"github.com/oklog/ulid/v2"
 )
 
 const (
@@ -112,6 +113,7 @@ func (p Projects) GetProjects(page int, tag string) (r []Project, err error) {
 			})
 
 			r = append(r, Project{
+				ID:          ulid.Make().String(),
 				Vendor:      p.Name(),
 				Author:      author,
 				Title:       strings.TrimSpace(project.Text()),

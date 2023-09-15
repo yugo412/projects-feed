@@ -7,6 +7,8 @@ import (
 	"net/url"
 	"strings"
 	"time"
+
+	"github.com/oklog/ulid/v2"
 )
 
 type query struct {
@@ -160,6 +162,7 @@ func (s Sribu) GetProjects(page int, tag string) (p []Project, err error) {
 
 	for _, j := range body.Data.JobsList.Data {
 		p = append(p, Project{
+			ID:          ulid.Make().String(),
 			Vendor:      s.Name(),
 			Title:       j.Title,
 			URL:         baseURL.JoinPath("id", "jobs", j.Id).String(),

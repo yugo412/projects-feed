@@ -28,6 +28,7 @@ type Budget struct {
 }
 
 type Project struct {
+	ID          string    `json:"-"`
 	Vendor      string    `json:"vendor"`
 	Title       string    `json:"title"`
 	URL         string    `json:"url"`

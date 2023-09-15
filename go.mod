@@ -7,8 +7,10 @@ require (
 	github.com/go-chi/chi/v5 v5.0.10
 	github.com/gocolly/colly/v2 v2.1.0
 	github.com/gorilla/feeds v1.1.1
+	github.com/oklog/ulid/v2 v2.1.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/xeonx/timeago v1.0.0-rc5
+	golang.org/x/text v0.9.0
 )
 
 require (
@@ -26,7 +28,6 @@ require (
 	github.com/stretchr/testify v1.8.3 // indirect
 	github.com/temoto/robotstxt v1.1.1 // indirect
 	golang.org/x/net v0.10.0 // indirect
-	golang.org/x/text v0.9.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/protobuf v1.30.0 // indirect
 )
