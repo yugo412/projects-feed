@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
-	"log"
 	"net/http"
 	"os"
 	"path"
@@ -14,6 +13,7 @@ import (
 	"time"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/gookit/slog"
 	"github.com/gorilla/feeds"
 )
 
@@ -41,7 +41,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("Internal server error."))
 
-		log.Println("Failed to get projects:", err)
+		slog.Error("Failed to get projects:", err)
 
 		return
 	}

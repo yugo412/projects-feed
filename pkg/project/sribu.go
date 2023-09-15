@@ -2,12 +2,12 @@ package project
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"net/url"
 	"strings"
 	"time"
 
+	"github.com/gookit/slog"
 	"github.com/oklog/ulid/v2"
 )
 
@@ -143,7 +143,7 @@ func (s Sribu) GetProjects(page int, tag string) (p []Project, err error) {
 		return
 	}
 
-	log.Printf(LogRequestFormat, s.Name(), req.URL.String())
+	slog.Debugf(LogRequestFormat, s.Name(), req.URL.String())
 
 	defer res.Body.Close()
 

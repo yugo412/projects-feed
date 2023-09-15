@@ -2,7 +2,6 @@ package project
 
 import (
 	"fmt"
-	"log"
 	"net/url"
 	"regexp"
 	"sort"
@@ -12,6 +11,7 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/gocolly/colly/v2"
+	"github.com/gookit/slog"
 	"github.com/oklog/ulid/v2"
 )
 
@@ -127,7 +127,7 @@ func (p Projects) GetProjects(page int, tag string) (r []Project, err error) {
 	})
 
 	c.OnRequest(func(req *colly.Request) {
-		log.Printf(LogRequestFormat, p.Name(), req.URL.String())
+		slog.Debugf(LogRequestFormat, p.Name(), req.URL.String())
 	})
 
 	err = c.Visit(target.String())

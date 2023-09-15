@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"projects-feed/cmd/api/router"
+
+	"github.com/gookit/slog"
 )
 
 func main() {
@@ -17,7 +18,7 @@ func main() {
 
 	env := os.Getenv("ENV")
 	if env != "production" {
-		log.Printf("Running [%s] in port: %s", env, port)
+		slog.Infof("Running [%s] in port: %s", env, port)
 	}
 
 	err := http.ListenAndServe(fmt.Sprintf(":%s", port), router.RegisterRoutes())
