@@ -106,11 +106,11 @@ type Sribu struct {
 	BaseURL string
 }
 
-func (s *Sribu) Name() string {
+func (s Sribu) Name() string {
 	return "Sribu.com"
 }
 
-func (s *Sribu) GetProjects(page int, tag string) (p []Project, err error) {
+func (s Sribu) GetProjects(page int, tag string) (p []Project, err error) {
 	// sribu doesn't support tag filtering right now
 	if tag != "" {
 		return

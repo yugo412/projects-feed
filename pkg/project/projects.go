@@ -22,11 +22,11 @@ type Projects struct {
 	BaseURL string
 }
 
-func (p *Projects) Name() string {
+func (p Projects) Name() string {
 	return "Projects.co.id"
 }
 
-func (p *Projects) GetProjects(page int, tag string) (r []Project, err error) {
+func (p Projects) GetProjects(page int, tag string) (r []Project, err error) {
 	target, err := url.Parse(p.BaseURL)
 	if err != nil {
 		return r, fmt.Errorf("invalid base url: %s", p.BaseURL)
