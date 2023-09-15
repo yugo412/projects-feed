@@ -11,16 +11,6 @@ import (
 	"github.com/oklog/ulid/v2"
 )
 
-type query struct {
-	Language string `json:"language"`
-}
-
-type payload struct {
-	Query         string `json:"query"`
-	Variables     string `json:"variables"`
-	OperationName string `json:"operationName"`
-}
-
 type response struct {
 	Data struct {
 		JobsList struct {
