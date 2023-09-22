@@ -5,9 +5,14 @@ import (
 	"net/http"
 	"os"
 	"projects-feed/cmd/api/router"
+	"projects-feed/cron"
 
 	"github.com/gookit/slog"
 )
+
+func init() {
+	cron.Run()
+}
 
 func main() {
 	port := os.Getenv("PORT")
