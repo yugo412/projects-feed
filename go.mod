@@ -6,9 +6,11 @@ require (
 	github.com/PuerkitoBio/goquery v1.5.1
 	github.com/go-chi/chi/v5 v5.0.10
 	github.com/gocolly/colly/v2 v2.1.0
+	github.com/gookit/slog v0.5.4
 	github.com/gorilla/feeds v1.1.1
 	github.com/oklog/ulid/v2 v2.1.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible
+	github.com/robfig/cron/v3 v3.0.1
 	github.com/xeonx/timeago v1.0.0-rc5
 	golang.org/x/text v0.11.0
 )
@@ -25,11 +27,9 @@ require (
 	github.com/gookit/color v1.5.4 // indirect
 	github.com/gookit/goutil v0.6.12 // indirect
 	github.com/gookit/gsr v0.1.0 // indirect
-	github.com/gookit/slog v0.5.4 // indirect
 	github.com/kennygrant/sanitize v1.2.4 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/saintfish/chardet v0.0.0-20120816061221-3af4cd4741ca // indirect
-	github.com/stretchr/testify v1.8.4 // indirect
 	github.com/temoto/robotstxt v1.1.1 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/xo/terminfo v0.0.0-20220910002029-abceb7e1c41e // indirect
