@@ -3,13 +3,37 @@ package cron
 import (
 	"github.com/gookit/slog"
 	"github.com/robfig/cron/v3"
+
+	"gorm.io/gorm"
 )
 
-func Run() {
+type Cron struct {
+	DB *gorm.DB
+}
+
+func Run(e Cron) {
+	var err error
+
 	c := cron.New()
-	id, err := c.AddFunc("@every 10m", FetchProjects)
+
+	_, err = c.AddFunc("@every 5s", func() {
+		err := FetchProjects(e.DB)
+		if err != nil {
+			slog.Errorf("Failed to fetch projects: %v", err)
+		}
+	})
 	if err != nil {
-		slog.Errorf("Failed to fetch projects with cron ID %s: %v", id, err)
+		slog.Errorf("Failed to run cron: %v", err)
+	}
+
+	_, err = c.AddFunc("@every 10s", func() {
+		err := UpdateProject(e.DB)
+		if err != nil {
+			slog.Errorf("Failed to update existing projects: %v", err)
+		}
+	})
+	if err != nil {
+		slog.Errorf("Failed to run cron: %v", err)
 	}
 
 	c.Start()
