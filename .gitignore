@@ -2,3 +2,4 @@
 /vendor/
 
 fly.toml
+db.sqlite
