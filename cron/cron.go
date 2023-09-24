@@ -16,7 +16,7 @@ func Run(e Cron) {
 
 	c := cron.New()
 
-	_, err = c.AddFunc("@every 5s", func() {
+	_, err = c.AddFunc("@every 5m", func() {
 		err := FetchProjects(e.DB)
 		if err != nil {
 			slog.Errorf("Failed to fetch projects: %v", err)
@@ -26,7 +26,7 @@ func Run(e Cron) {
 		slog.Errorf("Failed to run cron: %v", err)
 	}
 
-	_, err = c.AddFunc("@every 10s", func() {
+	_, err = c.AddFunc("@every 1m", func() {
 		err := UpdateProject(e.DB)
 		if err != nil {
 			slog.Errorf("Failed to update existing projects: %v", err)
