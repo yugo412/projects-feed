@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"gorm.io/gorm/logger"
 	"net/http"
 	"os"
 	"projects-feed/cmd/api/router"
@@ -19,7 +20,7 @@ var db *gorm.DB
 func init() {
 	var err error
 	db, err = gorm.Open(sqlite.Open("db.sqlite"), &gorm.Config{
-		//Logger: logger.Default.LogMode(logger.Info),
+		Logger: logger.Default.LogMode(logger.Silent),
 	})
 	if err != nil {
 		panic(err)
@@ -62,7 +63,9 @@ func main() {
 		slog.Infof("Running [%s] in port: %s", env, port)
 	}
 
-	err := http.ListenAndServe(fmt.Sprintf(":%s", port), router.RegisterRoutes())
+	err := http.ListenAndServe(fmt.Sprintf(":%s", port), router.RegisterRoutes(&router.App{
+		DB: db,
+	}))
 	if err != nil {
 		panic(err)
 	}

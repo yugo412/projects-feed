@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"os"
 	"path"
-	"projects-feed/internal"
+	"projects-feed/srv"
 	"strconv"
 	"strings"
 	"time"
@@ -15,9 +15,23 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/gookit/slog"
 	"github.com/gorilla/feeds"
+	"gorm.io/gorm"
 )
 
-func Index(w http.ResponseWriter, r *http.Request) {
+type Project struct {
+	DB      *gorm.DB
+	Service *srv.Project
+}
+
+func NewProject(project *Project) *Project {
+	project.Service = srv.NewProject(srv.NewProject(&srv.Project{
+		DB: project.DB,
+	}))
+
+	return project
+}
+
+func (p Project) Index(w http.ResponseWriter, r *http.Request) {
 	t, err := template.ParseFiles(path.Join("web", "template", "index.html"))
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -36,7 +50,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		tag = t
 	}
 
-	projects, err := internal.GetProjects(vendor, 1, tag)
+	projects, err := p.Service.GetProjects(vendor, 1, tag)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("Internal server error."))
@@ -69,7 +83,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func GetProjects(w http.ResponseWriter, r *http.Request) {
+func (p Project) GetProjects(w http.ResponseWriter, r *http.Request) {
 	tag := ""
 	if q := r.URL.Query().Get("tag"); q != "" {
 		tag = q
@@ -85,7 +99,7 @@ func GetProjects(w http.ResponseWriter, r *http.Request) {
 		vendor = v
 	}
 
-	projects, err := internal.GetProjects(vendor, page, tag)
+	projects, err := p.Service.GetProjects(vendor, page, tag)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
@@ -103,7 +117,7 @@ func GetProjects(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func GetProjectsFeed(w http.ResponseWriter, r *http.Request) {
+func (p Project) GetProjectsFeed(w http.ResponseWriter, r *http.Request) {
 	feed := &feeds.Feed{
 		Title:       "Projects.co.id",
 		Description: "Kerja Online Hasil Maksimal",
@@ -126,7 +140,7 @@ func GetProjectsFeed(w http.ResponseWriter, r *http.Request) {
 		tag = q
 	}
 
-	projects, err := internal.GetProjects(vendor, 1, tag)
+	projects, err := p.Service.GetProjects(vendor, 1, tag)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
@@ -173,6 +187,6 @@ func GetProjectsFeed(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func RedirectProject(w http.ResponseWriter, r *http.Request) {
+func (p Project) RedirectProject(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, r.URL.Query().Get("to"), http.StatusSeeOther)
 }

@@ -8,9 +8,14 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"gorm.io/gorm"
 )
 
 var c *chi.Mux
+
+type App struct {
+	DB *gorm.DB
+}
 
 func init() {
 	c = chi.NewRouter()
@@ -32,15 +37,19 @@ func init() {
 	c.Handle("/public/*", http.StripPrefix("/public/", fileServer))
 }
 
-func RegisterRoutes() *chi.Mux {
+func RegisterRoutes(app *App) *chi.Mux {
 	c.NotFound(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(404)
 		w.Write([]byte("Page not found."))
 	})
 
-	c.Get("/", handler.Index)
-
-	c.Route("/projects", projectsRouter)
+	project := handler.NewProject(&handler.Project{
+		DB: app.DB,
+	})
+	c.Get("/", project.Index)
+	c.Get("/projects", project.GetProjects)
+	c.Get("/projects/{type}", project.GetProjectsFeed)
+	c.Get("/projects/go", project.RedirectProject)
 
 	return c
 }
