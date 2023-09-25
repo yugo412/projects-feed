@@ -106,6 +106,7 @@ func FetchProjects(db *gorm.DB) error {
 				Title:       p.Title,
 				Description: p.Description,
 				PublishedAt: p.PublishedAt,
+				URL:         p.URL,
 				MinBudget:   p.Budget.Min,
 				MaxBudget:   p.Budget.Max,
 				Vendor:      vendor,
