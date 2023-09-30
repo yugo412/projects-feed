@@ -17,7 +17,7 @@
   <link href="/public/css/tabler.min.css?1684106062" rel="stylesheet"/>
 
   <link rel="alternate" type="application/rss+xml" title="{{.title}}" href="/projects/rss?{{.query}}"/>
-  <link rel="alternate" type="application/rss+atom" title="{{.title}}" href="/projects/atom{{.query}}"/>
+  <link rel="alternate" type="application/rss+atom" title="{{.title}}" href="/projects/atom?{{.query}}"/>
   <style>
       @import url('https://rsms.me/inter/inter.css');
 
@@ -167,17 +167,6 @@
                             <div class="mt-3 list-inline list-inline-dots mb-0 text-secondary d-sm-block d-none">
                               <div class="list-inline-item">
                                 <svg xmlns="http://www.w3.org/2000/svg"
-                                     class="icon icon-inline icon-tabler icon-tabler-user" width="24" height="24"
-                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                     stroke-linecap="round" stroke-linejoin="round">
-                                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                  <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
-                                  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
-                                </svg>
-                                <a href="/projects/go?to={{.Author.URL}}">{{.Author.Name}}</a>
-                              </div>
-                              <div class="list-inline-item">
-                                <svg xmlns="http://www.w3.org/2000/svg"
                                      class="icon icon-inline icon-tabler icon-tabler-calendar-plus" width="24"
                                      height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                      stroke-linecap="round" stroke-linejoin="round">
@@ -193,6 +182,17 @@
                               </div>
                               <div class="list-inline-item">
                                 <svg xmlns="http://www.w3.org/2000/svg"
+                                     class="icon icon-inline icon-tabler icon-tabler-user" width="24" height="24"
+                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                     stroke-linecap="round" stroke-linejoin="round">
+                                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                  <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
+                                  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+                                </svg>
+                                By <a href="/projects/go?to={{.Author.URL}}">{{.Author.Name}}</a>
+                              </div>
+                              <div class="list-inline-item">
+                                <svg xmlns="http://www.w3.org/2000/svg"
                                      class="icon icon-inline icon-tabler icon-tabler-building-skyscraper" width="24"
                                      height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                      stroke-linecap="round" stroke-linejoin="round">
@@ -205,23 +205,12 @@
                                   <path d="M9 15l0 .01"></path>
                                   <path d="M9 18l0 .01"></path>
                                 </svg>
-                                <a href="/?vendor={{.Vendor}}">{{.Vendor}}</a>
+                                Via <a href="/?vendor={{.Vendor}}">{{.Vendor}}</a>
                               </div>
                             </div>
                             <div class="mt-3 list mb-0 text-secondary d-block d-sm-none">
                               <div class="list-item">
                                 <svg xmlns="http://www.w3.org/2000/svg"
-                                     class="icon icon-inline icon-tabler icon-tabler-user" width="24" height="24"
-                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                     stroke-linecap="round" stroke-linejoin="round">
-                                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                  <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
-                                  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
-                                </svg>
-                                <a href="/projects/go?to={{.Author.URL}}">{{.Author.Name}}</a>
-                              </div>
-                              <div class="list-item">
-                                <svg xmlns="http://www.w3.org/2000/svg"
                                      class="icon icon-inline icon-tabler icon-tabler-calendar-plus" width="24"
                                      height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                      stroke-linecap="round" stroke-linejoin="round">
@@ -237,6 +226,17 @@
                               </div>
                               <div class="list-item">
                                 <svg xmlns="http://www.w3.org/2000/svg"
+                                     class="icon icon-inline icon-tabler icon-tabler-user" width="24" height="24"
+                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                     stroke-linecap="round" stroke-linejoin="round">
+                                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                  <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
+                                  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+                                </svg>
+                                By <a href="/projects/go?to={{.Author.URL}}">{{.Author.Name}}</a>
+                              </div>
+                              <div class="list-item">
+                                <svg xmlns="http://www.w3.org/2000/svg"
                                      class="icon icon-inline icon-tabler icon-tabler-building-skyscraper" width="24"
                                      height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                      stroke-linecap="round" stroke-linejoin="round">
@@ -249,7 +249,7 @@
                                   <path d="M9 15l0 .01"></path>
                                   <path d="M9 18l0 .01"></path>
                                 </svg>
-                                <a href="/?vendor={{.SanitizedVendor}}">{{.Vendor}}</a>
+                                Via <a href="/?vendor={{.SanitizedVendor}}">{{.Vendor}}</a>
                               </div>
                             </div>
                           </div>

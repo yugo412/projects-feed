@@ -2,57 +2,61 @@ package srv
 
 import (
 	"fmt"
-	"projects-feed/models"
+	"projects-feed/pkg/cache"
 	"projects-feed/pkg/project"
-	"strconv"
-
-	"gorm.io/gorm"
+	"sort"
+	"strings"
+	"sync"
 )
 
-type Project struct {
-	DB *gorm.DB
-}
+func GetProjects(vendor string, page int, tag string) (p []project.Project, err error) {
+	key := fmt.Sprintf("vendor%spage%dtag%s", vendor, page, tag)
 
-func NewProject(p *Project) *Project {
-	return p
-}
-
-func (p Project) GetProjects(vendor string, page int, tag string) (projects []project.Project, err error) {
-	var ps []models.Project
-	err = p.DB.Model(&models.Project{}).
-		Debug().
-		Preload("Vendor").
-		Preload("Author").
-		Where("title LIKE ?", fmt.Sprintf("%%%s%%", tag)).
-		Order("published_at DESC").
-		Limit(20).
-		Find(&ps).
-		Error
-	if err != nil {
-		return
+	c := cache.New("memory")
+	if val, err := c.Get(key); err == nil && c != nil {
+		return val.([]project.Project), nil
 	}
 
-	for _, x := range ps {
-		projects = append(projects, project.Project{
-			ID:          strconv.Itoa(int(x.ID)),
-			Vendor:      x.Vendor.Brand,
-			Title:       x.Title,
-			URL:         x.URL,
-			Description: x.Description,
-			PublishedAt: x.PublishedAt,
-			Tags:        nil,
-			Author: project.Author{
-				Name:      x.Author.Name,
-				Username:  x.Author.Username,
-				URL:       x.Author.URL,
-				AvatarURL: x.Author.Avatar,
-			},
-			Budget: project.Budget{
-				Min: x.MinBudget,
-				Max: x.MaxBudget,
-			},
-		})
+	var vendors []string
+	if vendor != "" {
+		names := strings.Split(vendor, ".")
+		if len(names) >= 1 {
+			vendors = append(vendors, names[0])
+		} else {
+			vendors = append(vendors, vendor)
+		}
+	} else {
+		vendors = []string{"sribu", "projects"}
 	}
+
+	var wg sync.WaitGroup
+	for _, v := range vendors {
+		wg.Add(1)
+		go func(name string) {
+			vendor := project.New(name)
+			if vendor == nil {
+				wg.Done()
+
+				return
+			}
+
+			latest, err := vendor.GetProjects(page, tag)
+			if err == nil {
+				p = append(p, latest...)
+			}
+
+			wg.Done()
+		}(v)
+	}
+
+	wg.Wait()
+
+	// sort datetime from different vendor
+	sort.Slice(p, func(i, j int) bool {
+		return p[j].PublishedAt.Before(p[i].PublishedAt)
+	})
+
+	c.Set(key, p)
 
 	return
 }
