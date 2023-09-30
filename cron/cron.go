@@ -9,7 +9,7 @@ func Run() {
 	var err error
 	c := cron.New()
 
-	_, err = c.AddFunc("@every 1m", func() {
+	_, err = c.AddFunc("@every 10s", func() {
 		err := UpdateProject()
 		if err != nil {
 			slog.Errorf("Failed to update existing projects: %v", err)
