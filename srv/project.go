@@ -7,10 +7,19 @@ import (
 	"sort"
 	"strings"
 	"sync"
+
+	"github.com/gookit/slog"
 )
 
+func GetDetail(URL, vendor string) (p project.Project, err error) {
+	vendors := strings.Split(vendor, ".")
+	p, err = project.New(vendors[0]).GetDetail(URL)
+
+	return
+}
+
 func GetProjects(vendor string, page int, tag string) (p []project.Project, err error) {
-	key := fmt.Sprintf("vendor%spage%dtag%s", vendor, page, tag)
+	key := fmt.Sprintf("projects_vendor%spage%dtag%s", vendor, page, tag)
 
 	c := cache.New("memory")
 	if val, err := c.Get(key); err == nil && c != nil {
@@ -56,7 +65,9 @@ func GetProjects(vendor string, page int, tag string) (p []project.Project, err 
 		return p[j].PublishedAt.Before(p[i].PublishedAt)
 	})
 
-	c.Set(key, p)
+	if ok, _ := c.Set(key, p); !ok {
+		slog.Errorf("Failed to set cache for \"%s\".", key)
+	}
 
 	return
 }
