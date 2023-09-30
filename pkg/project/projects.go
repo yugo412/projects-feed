@@ -139,3 +139,7 @@ func (p Projects) GetProjects(page int, tag string) (r []Project, err error) {
 
 	return
 }
+
+func (p Projects) GetDetail(URL string) (project Project, err error) {
+	return
+}

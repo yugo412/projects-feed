@@ -10,6 +10,7 @@ type Cache interface {
 	Set(string, any) (bool, error)
 	SetFor(string, any, time.Duration) (bool, error)
 	Get(string) (any, error)
+	Items() map[string]interface{}
 }
 
 var (
