@@ -94,6 +94,112 @@ type response struct {
 	} `json:"data"`
 }
 
+type detailResponse struct {
+	Data struct {
+		JobFindOne struct {
+			Status  string      `json:"status"`
+			Message interface{} `json:"message"`
+			Error   interface{} `json:"error"`
+			Data    struct {
+				Header struct {
+					Id                      string `json:"id"`
+					FlowStatus              string `json:"flow_status"`
+					JobType                 int    `json:"job_type"`
+					IsNoHired               int    `json:"is_no_hired"`
+					PackageWorkspaceCreated int    `json:"package_workspace_created"`
+					Title                   string `json:"title"`
+					Mmember                 struct {
+						Id            string `json:"id"`
+						Name          string `json:"name"`
+						UserId        string `json:"user_id"`
+						Language      string `json:"language"`
+						UrlAvatarFull string `json:"url_avatar_full"`
+						Country       string `json:"country"`
+						MmemberStatus struct {
+							ClAvgRating        float64 `json:"cl_avg_rating"`
+							ClWorkspacesClosed int     `json:"cl_workspaces_closed"`
+							ClJobsPosted       int     `json:"cl_jobs_posted"`
+							ClReviewed         int     `json:"cl_reviewed"`
+						} `json:"mmember_status"`
+					} `json:"mmember"`
+					CreatedAt        time.Time `json:"created_at"`
+					AppliedNumber    int       `json:"applied_number"`
+					HiredNumber      int       `json:"hired_number"`
+					Description      string    `json:"description"`
+					CurrencyCode     string    `json:"currency_code"`
+					WritingLanguage  string    `json:"writing_language"`
+					WritingStyle     string    `json:"writing_style"`
+					TargetAudience   string    `json:"target_audience"`
+					FreelancerBudget int       `json:"freelancer_budget"`
+					Msubcategory     struct {
+						Id               string `json:"id"`
+						Cname            string `json:"cname"`
+						MainAssetUrl     string `json:"main_asset_url"`
+						FallbackAssetUrl string `json:"fallback_asset_url"`
+						Name             string `json:"name"`
+						NameEn           string `json:"name_en"`
+						MinimumBudget    int    `json:"minimum_budget"`
+						MinimumBudgetUsd int    `json:"minimum_budget_usd"`
+						BriefType        int    `json:"brief_type"`
+						Mcategory        struct {
+							Id               string `json:"id"`
+							Name             string `json:"name"`
+							NameEn           string `json:"name_en"`
+							MainAssetUrl     string `json:"main_asset_url"`
+							FallbackAssetUrl string `json:"fallback_asset_url"`
+							Mlandingpage     struct {
+								Id  string `json:"id"`
+								Url string `json:"url"`
+							} `json:"mlandingpage"`
+						} `json:"mcategory"`
+						Mlandingpage struct {
+							Id  string `json:"id"`
+							Url string `json:"url"`
+						} `json:"mlandingpage"`
+					} `json:"msubcategory"`
+					Amount                  int       `json:"amount"`
+					FreelancerPayableAmount int       `json:"freelancer_payable_amount"`
+					ComissionAmount         int       `json:"comission_amount"`
+					Budget                  int       `json:"budget"`
+					Deadline                string    `json:"deadline"`
+					PostingTimeLimit        time.Time `json:"posting_time_limit"`
+					CreatedBy               string    `json:"created_by"`
+					Status                  int       `json:"status"`
+					UpdatedAt               time.Time `json:"updated_at"`
+					IndustryId              string    `json:"industry_id"`
+					CompanyName             string    `json:"company_name"`
+					CompanyWebsite          string    `json:"company_website"`
+					AboutCompany            string    `json:"about_company"`
+					Keywords                string    `json:"keywords"`
+					ProjectTitle            string    `json:"project_title"`
+					ContentLength           int       `json:"content_length"`
+					Revision                int       `json:"revision"`
+					Mindustry               struct {
+						Id     string `json:"id"`
+						Name   string `json:"name"`
+						NameEn string `json:"name_en"`
+					} `json:"mindustry"`
+					Mpackage struct {
+						GroupCname string `json:"group_cname"`
+						Name       string `json:"name"`
+						NameEn     string `json:"name_en"`
+						Tier       int    `json:"tier"`
+					} `json:"mpackage"`
+				} `json:"header"`
+				DetailSkills       []interface{} `json:"detail_skills"`
+				DetailApplicants   []interface{} `json:"detail_applicants"`
+				DetailHired        []interface{} `json:"detail_hired"`
+				DetailCustomBriefs []interface{} `json:"detail_custom_briefs"`
+				DetailAttachments  []struct {
+					Id       string `json:"id"`
+					FileName string `json:"file_name"`
+					UrlFile  string `json:"url_file"`
+				} `json:"detail_attachments"`
+			} `json:"data"`
+		} `json:"jobFindOne"`
+	} `json:"data"`
+}
+
 type Sribu struct {
 	BaseURL string
 }
@@ -170,6 +276,58 @@ func (s Sribu) GetProjects(page int, tag string) (p []Project, err error) {
 			Tags: []string{j.SubCategory.NameInEn},
 		})
 	}
+
+	return
+}
+
+func (s Sribu) GetDetail(URL string) (p Project, err error) {
+	target, err := url.Parse(s.BaseURL)
+	if err != nil {
+		return
+	}
+
+	URLs := strings.Split(URL, "/")
+	id := URLs[len(URLs)-1]
+
+	target = target.JoinPath("public")
+	method := "POST"
+
+	params := strings.NewReader(`{"query": "query jobFindOnePublic($id: UUID!) {\n                  jobFindOne: jobFindOnePublic(id: $id) {\n                    status\n                    message\n                    error\n                    data {\n                      header {\n                        id\n                        flow_status\n                        job_type\n                        is_no_hired\n                        package_workspace_created\n                        title\n                        mmember {\n                          id\n                          name\n                          user_id\n                          language\n                          url_avatar_full\n                          country\n                          mmember_status {\n                            cl_avg_rating\n                            cl_workspaces_closed\n                            cl_jobs_posted\n                            cl_reviewed\n                          }\n                        }\n                        created_at\n                        applied_number\n                        hired_number\n                        description\n                        currency_code\n                        writing_language\n                        writing_style\n                        target_audience\n                        freelancer_budget\n                        msubcategory {\n                          id\n                          cname\n                          main_asset_url\n                          fallback_asset_url\n                          name\n                          name_en\n                          minimum_budget\n                          minimum_budget_usd\n                          brief_type\n                          mcategory {\n                            id\n                            name\n                            name_en\n                            main_asset_url\n                            fallback_asset_url\n                            mlandingpage {\n                              id\n                              url\n                            }\n                          }\n                          mlandingpage {\n                            id\n                            url\n                          }\n                        }\n                        amount\n                        freelancer_payable_amount\n                        comission_amount\n                        budget\n                        deadline\n                        posting_time_limit\n                        created_by\n                        status\n                        updated_at\n                        industry_id\n                        company_name\n                        company_website\n                        about_company\n                        keywords\n                        project_title\n                        content_length\n                        revision\n                        mindustry {\n                          id\n                          name\n                          name_en\n                        }\n                        mpackage {\n                          group_cname\n                          name\n                          name_en\n                          tier\n                        }\n                      }\n                      detail_skills {\n                        id\n                        mskill {\n                          id\n                          name\n                          name_en\n                        }\n                      }\n                      detail_applicants {\n                        id\n                        updated_at\n                        status\n                        mmember {\n                          id\n                          status\n                          user_id\n                          name\n                          url_avatar_full\n                          url_avatar_thumbnail\n                          mmember_status {\n                            fl_rating_avg\n                          }\n                        }\n                      }\n                      detail_hired {\n                        id\n                        updated_at\n                        mmember {\n                          id\n                          status\n                          user_id\n                          name\n                          is_freelancer\n                          url_avatar_full\n                          url_avatar_thumbnail\n                          mmember_status {\n                            fl_rating_avg\n                          }\n                        }\n                      }\n                      detail_custom_briefs {\n                        title\n                        type\n                        content_length\n                        keywords\n                        company_name\n                        about_company\n                        company_website\n                      }\n                      detail_attachments {\n                        id\n                        file_name\n                        url_file\n                      }\n                    }\n                  }\n                  typesList(\n                    page: 1\n                    per_page: 5\n                    status: 1\n                    is_thanos_hide: 0\n                    type: \"categories\"\n                  ) {\n                    status\n                    count\n                    message\n                    error\n                    data {\n                      id\n                      name\n                      name_en\n                    }\n                  }\n                }",
+    "variables": {
+        "id": "` + id + `"
+    },
+    "operationName": null}`)
+
+	req, err := http.NewRequest(method, target.String(), params)
+	if err != nil {
+		return
+	}
+
+	baseURL, _ := url.Parse("https://www.sribu.com")
+
+	req.Header.Set("Authority", target.Host)
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Origin", baseURL.String())
+	req.Header.Add("Referer", baseURL.String())
+
+	client := &http.Client{
+		Timeout: 5 * time.Second,
+	}
+	res, err := client.Do(req)
+	if err != nil {
+		return
+	}
+
+	slog.Debugf(LogRequestFormat, s.Name(), req.URL.String())
+
+	defer res.Body.Close()
+
+	var body detailResponse
+	err = json.NewDecoder(res.Body).Decode(&body)
+
+	p.Description = body.Data.JobFindOne.Data.Header.Description
+	p.Author.AvatarURL = body.Data.JobFindOne.Data.Header.Mmember.UrlAvatarFull
 
 	return
 }
