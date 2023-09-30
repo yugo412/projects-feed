@@ -44,3 +44,12 @@ func (m *Memory) Get(key string) (val any, err error) {
 
 	return val, nil
 }
+
+func (m *Memory) Items() map[string]interface{} {
+	items := make(map[string]interface{})
+	for k, v := range c.Items() {
+		items[k] = v.Object
+	}
+
+	return items
+}
