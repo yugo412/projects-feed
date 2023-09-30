@@ -1,7 +1,6 @@
 package cron
 
 import (
-	"net/url"
 	"projects-feed/pkg/cache"
 	"projects-feed/pkg/project"
 	"projects-feed/srv"
@@ -19,12 +18,13 @@ func UpdateProject() (err error) {
 		if strings.Contains(k, "projects_") {
 			projects := v.([]project.Project)
 			for _, p := range projects {
-				avatar, err := url.Parse(p.Author.AvatarURL)
-				if avatar.Host == "" || err != nil {
-					_, err := srv.GetDetail(p.URL, p.Vendor)
+				if p.Description == "" {
+					detail, err := srv.GetDetail(p.URL, p.Vendor)
 					if err == nil {
-						p.Author.Name = "TEST"
-						p.Author.AvatarURL = ""
+						p.Description = detail.Description
+
+						// default image from sribu is broken
+						//p.Author.AvatarURL = detail.Author.AvatarURL
 					}
 				}
 				cache = append(cache, p)
