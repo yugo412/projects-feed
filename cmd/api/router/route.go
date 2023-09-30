@@ -37,19 +37,16 @@ func init() {
 	c.Handle("/public/*", http.StripPrefix("/public/", fileServer))
 }
 
-func RegisterRoutes(app *App) *chi.Mux {
+func RegisterRoutes() *chi.Mux {
 	c.NotFound(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(404)
 		w.Write([]byte("Page not found."))
 	})
 
-	project := handler.NewProject(&handler.Project{
-		DB: app.DB,
-	})
-	c.Get("/", project.Index)
-	c.Get("/projects", project.GetProjects)
-	c.Get("/projects/{type}", project.GetProjectsFeed)
-	c.Get("/projects/go", project.RedirectProject)
+	c.Get("/", handler.Index)
+	c.Get("/projects", handler.GetProjects)
+	c.Get("/projects/{type}", handler.GetProjectsFeed)
+	c.Get("/projects/go", handler.RedirectProject)
 
 	return c
 }

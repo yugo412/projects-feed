@@ -2,50 +2,17 @@ package main
 
 import (
 	"fmt"
-	"gorm.io/gorm/logger"
 	"net/http"
 	"os"
 	"projects-feed/cmd/api/router"
 	"projects-feed/cron"
-	"projects-feed/models"
 
 	"github.com/gookit/slog"
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
 )
-
-var db *gorm.DB
-
-// Init database connection, by default it uses SQLite
-func init() {
-	var err error
-	db, err = gorm.Open(sqlite.Open("db.sqlite"), &gorm.Config{
-		Logger: logger.Default.LogMode(logger.Silent),
-	})
-	if err != nil {
-		panic(err)
-	}
-
-	env := os.Getenv("ENV")
-
-	// auto migrate for non prod env
-	if env != "production" {
-		err = db.AutoMigrate(
-			&models.Author{},
-			&models.Vendor{},
-			&models.Project{},
-		)
-		if err != nil {
-			slog.Errorf("Failed to auto-migrate database: %v", err)
-		}
-	}
-}
 
 // Run every job that registered in cron/schedulers
 func init() {
-	cron.Run(cron.Cron{
-		DB: db,
-	})
+	cron.Run()
 }
 
 func main() {
@@ -63,9 +30,7 @@ func main() {
 		slog.Infof("Running [%s] in port: %s", env, port)
 	}
 
-	err := http.ListenAndServe(fmt.Sprintf(":%s", port), router.RegisterRoutes(&router.App{
-		DB: db,
-	}))
+	err := http.ListenAndServe(fmt.Sprintf(":%s", port), router.RegisterRoutes())
 	if err != nil {
 		panic(err)
 	}
