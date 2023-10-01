@@ -20,7 +20,7 @@ func UpdateProject() (err error) {
 
 	// get all stored data in cache by key
 	for k, v := range c.Items() {
-		var cache []project.Project
+		var cacheProjects []project.Project
 		if strings.Contains(k, "projects_") {
 			projects := v.([]project.Project)
 			for _, p := range projects {
@@ -33,11 +33,11 @@ func UpdateProject() (err error) {
 						//p.Author.AvatarURL = detail.Author.AvatarURL
 					}
 				}
-				cache = append(cache, p)
+				cacheProjects = append(cacheProjects, p)
 			}
 		}
 
-		if ok, _ := c.Set(k, cache); !ok {
+		if ok, _ := c.Set(k, cacheProjects); !ok {
 			slog.Errorf("Failed to set cache for \"%s\".", k)
 		}
 	}
