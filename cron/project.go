@@ -9,6 +9,12 @@ import (
 	"github.com/gookit/slog"
 )
 
+func PrefectProject() (err error) {
+	_, err = srv.GetProjects("", 1, "")
+
+	return
+}
+
 func UpdateProject() (err error) {
 	c := cache.New("memory")
 
