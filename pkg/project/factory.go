@@ -13,6 +13,7 @@ import (
 type Vendor interface {
 	Name() string
 	GetProjects(int, string) ([]Project, error)
+	GetDetail(string) (Project, error)
 }
 
 type Author struct {
