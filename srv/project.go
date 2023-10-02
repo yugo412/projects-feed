@@ -21,7 +21,11 @@ func GetDetail(URL, vendor string) (p project.Project, err error) {
 func GetProjects(vendor string, page int, tag string) (p []project.Project, err error) {
 	key := fmt.Sprintf("projects_vendor%spage%dtag%s", vendor, page, tag)
 
-	c := cache.New("memory")
+	c, err := cache.New("memory")
+	if err != nil {
+		slog.Errorf("failed to initialize cache: %v", err)
+	}
+
 	if val, err := c.Get(key); err == nil && c != nil {
 		return val.([]project.Project), nil
 	}

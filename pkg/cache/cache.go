@@ -1,7 +1,9 @@
 package cache
 
 import (
+	"fmt"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -14,21 +16,23 @@ type Cache interface {
 }
 
 var (
+	once sync.Once
+
 	memoryInstance *Memory
 )
 
-func New(driver string) Cache {
+func New(driver string) (Cache, error) {
 	driver = strings.ToLower(driver)
 
 	switch driver {
 	case "memory":
 		// memory cache is always on singleton
-		if memoryInstance == nil {
+		once.Do(func() {
 			memoryInstance = &Memory{}
-		}
+		})
 
-		return memoryInstance
+		return memoryInstance, nil
 	}
 
-	return nil
+	return nil, fmt.Errorf("driver %s is not supported", driver)
 }
