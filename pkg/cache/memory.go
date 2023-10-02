@@ -39,7 +39,7 @@ func (m *Memory) SetFor(key string, val any, exp time.Duration) (bool, error) {
 func (m *Memory) Get(key string) (val any, err error) {
 	val, cached := c.Get(key)
 	if !cached {
-		return nil, fmt.Errorf("key %s has no value", key)
+		return nil, fmt.Errorf("key \"%s\" has no value", key)
 	}
 
 	return val, nil
