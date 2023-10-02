@@ -16,7 +16,10 @@ func PrefectProject() (err error) {
 }
 
 func UpdateProject() (err error) {
-	c := cache.New("memory")
+	c, err := cache.New("memory")
+	if err != nil {
+		slog.Errorf("failed to initialize cache: %v", err)
+	}
 
 	// get all stored data in cache by key
 	for k, v := range c.Items() {
