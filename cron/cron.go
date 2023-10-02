@@ -13,7 +13,7 @@ func Run() {
 		// by default, it will try to fetch projects every minute
 		// but, since the projects is stored to the cache for 10 minutes
 		// the projects won't re-fetch from the source until it expires
-		err := PrefectProject()
+		err := PrefetchProjects()
 		if err != nil {
 			slog.Errorf("Failed to fetch projects: %v", err)
 		}
