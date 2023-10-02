@@ -9,7 +9,7 @@ import (
 	"github.com/gookit/slog"
 )
 
-func PrefectProject() (err error) {
+func PrefetchProjects() (err error) {
 	_, err = srv.GetProjects("", 1, "")
 
 	return
